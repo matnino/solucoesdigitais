@@ -139,30 +139,52 @@ section{scroll-margin-top:76px}
 @media (min-width:1000px){.sec-head{grid-template-columns:1fr 1fr;align-items:end;gap:64px}}
 
 /* Serviços */
-.svc{display:grid;gap:22px;padding:40px 0;border-top:1px solid var(--rule)}
-.svc:first-of-type{border-top:2px solid var(--rule-strong)}
+.carousel{--cw:calc(100vw - 72px);--gap:16px}
+.car-bar{width:var(--cw);max-width:100%;margin-inline:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px;border-bottom:1px solid var(--rule)}
+.car-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.car-tabs::-webkit-scrollbar{display:none}
+.car-tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:12px 12px 14px;font:600 15px/1 var(--f);color:var(--ink-3);cursor:pointer;white-space:nowrap;transition:color .2s, border-color .2s}
+.car-tab:first-child{padding-left:0}
+.car-tab:hover{color:var(--ink)}
+.car-tab[aria-current="true"]{color:var(--ink);border-bottom-color:var(--signal)}
+.car-arrows{display:none;gap:8px;padding-bottom:10px}
+.car-arrow{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--rule);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .2s, opacity .2s}
+.car-arrow svg{width:18px;height:18px}
+.car-arrow:hover{border-color:var(--ink)}
+.car-arrow:active{transform:scale(.94)}
+@media (min-width:600px){.car-arrows{display:flex}}
+.track{position:relative;display:grid;width:100vw;margin-left:calc(50% - 50vw);overflow:hidden;padding:4px 0 8px;touch-action:pan-y;user-select:none;-webkit-user-select:none;
+  --fade:linear-gradient(90deg, transparent max(0%, calc(50% - var(--cw) - var(--gap))), #000 calc(50% - var(--cw)/2), #000 calc(50% + var(--cw)/2), transparent min(100%, calc(50% + var(--cw) + var(--gap))));
+  -webkit-mask-image:var(--fade);mask-image:var(--fade)}
+.track:focus-visible{outline:none}
+.track:focus-visible .svc.is-center{outline:2px solid var(--signal);outline-offset:3px}
+.svc{grid-area:1/1;justify-self:center;width:var(--cw);display:grid;gap:22px;align-content:start;background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:28px 22px;transform:translateX(calc(var(--o, 0) * (100% + var(--gap))));transition:transform .65s var(--ease)}
+.svc:not(.is-center){cursor:pointer}
+.svc.jump{transition:none}
+.car-count{width:var(--cw);max-width:100%;margin:16px auto 0;color:var(--ink-3);font-size:14px;font-variant-numeric:tabular-nums}
 .svc .svc-job{margin:8px 0 14px;font-weight:600;color:var(--signal)}
 .svc p{margin:0;color:var(--ink-2);max-width:50ch}
 .spec{margin:0;padding:0;list-style:none}
 .spec li{padding:11px 0;border-bottom:1px solid var(--rule)}
 .spec li:first-child{border-top:1px solid var(--rule)}
+.spec b{font-weight:600;color:var(--signal)}
 .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:18px}
 .price b{font-weight:700;font-size:22px;font-variation-settings:"wdth" 112;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .price span{color:var(--ink-3);font-size:15px}
 @media (min-width:900px){
-  .svc{grid-template-columns:1fr 1fr;gap:64px;padding:52px 0}
+  .carousel{--cw:min(980px, 100vw - 220px);--gap:24px}
+  .svc{grid-template-columns:1fr 1fr;gap:56px;padding:44px}
 }
 
 /* Onde a venda escapa */
-.leaks{display:grid;gap:0;margin:0}
-.leak{padding:26px 0;border-top:1px solid var(--rule)}
-.leak dt{font-weight:700;font-size:20px;font-variation-settings:"wdth" 112;letter-spacing:-.01em;margin-bottom:6px}
-.leak dd{margin:0;color:var(--ink-2);max-width:40ch}
-.leak dd b{color:var(--ink);font-weight:600}
-@media (min-width:900px){
-  .leaks{grid-template-columns:repeat(3,1fr);gap:40px}
-  .leak{border-top:2px solid var(--rule-strong)}
-}
+.leaks{display:grid;gap:16px;margin:0;padding:0;list-style:none}
+.leak{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:28px 24px 30px}
+.leak-ico{width:52px;height:52px;border-radius:14px;background:var(--signal-soft);color:var(--signal);display:grid;place-items:center;margin-bottom:24px}
+.leak-ico svg{width:28px;height:28px}
+.leak h3{font-size:21px;margin-bottom:8px}
+.leak p{margin:0;color:var(--ink-2);max-width:40ch}
+.leak p b{color:var(--ink);font-weight:600}
+@media (min-width:900px){.leaks{grid-template-columns:repeat(3,1fr);gap:20px}.leak{padding:32px 28px 34px}}
 
 /* Como funciona */
 .steps{list-style:none;margin:0;padding:0;display:grid;counter-reset:s}
@@ -261,6 +283,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.95 1.34-.5.05-.97.24-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.35-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.9 1.05.93 1.93 1.22 2.2 1.36.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.33z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.5l5 5 10-11"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 12H5m6-6-6 6 6 6"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 12h15m-6-6 6 6-6 6"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
 </svg>
 
@@ -328,7 +352,20 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <p>Você pode contratar só um. Mas eles foram pensados para trabalhar juntos: o anúncio traz a pessoa, o site convence e o CRM garante que ninguém fique sem resposta.</p>
       </div>
 
-      <article class="svc">
+      <div class="carousel" aria-roledescription="carrossel" aria-label="Serviços">
+        <div class="car-bar">
+          <div class="car-tabs">
+            <button class="car-tab" type="button" data-go="0" aria-current="true">Tráfego pago</button>
+            <button class="car-tab" type="button" data-go="1">Sites</button>
+            <button class="car-tab" type="button" data-go="2">CRM</button>
+          </div>
+          <div class="car-arrows">
+            <button class="car-arrow" type="button" data-dir="-1" aria-label="Serviço anterior"><svg aria-hidden="true"><use href="#i-prev"/></svg></button>
+            <button class="car-arrow" type="button" data-dir="1" aria-label="Próximo serviço"><svg aria-hidden="true"><use href="#i-next"/></svg></button>
+          </div>
+        </div>
+        <div class="track" tabindex="0" aria-label="Serviços. Use as setas do teclado para trocar.">
+      <article class="svc" aria-roledescription="slide" aria-label="1 de 3: Tráfego pago">
         <div>
           <h3>Tráfego pago</h3>
           <p class="svc-job">Traz o cliente até você.</p>
@@ -336,35 +373,37 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         </div>
         <div>
           <ul class="spec">
+            <li><b>Campanhas no ar em até 3 dias</b> após a reunião de alinhamento e a liberação dos acessos</li>
             <li>Campanhas no Google Ads e no Meta Ads</li>
             <li>Palavras-chave, público e região definidos com você</li>
             <li>Textos e criativos dos anúncios</li>
             <li>Acompanhamento e ajustes toda semana</li>
             <li>Relatório simples: quanto investiu, quantos contatos vieram</li>
           </ul>
-          <div class="price"><b>Sob medida</b><span>o valor depende do tamanho da campanha</span></div>
+          <div class="price"><b>A partir de R$ 1.000</b><span>a verba dos anúncios é paga à parte</span></div>
         </div>
       </article>
 
-      <article class="svc">
+      <article class="svc" aria-roledescription="slide" aria-label="2 de 3: Sites e landing pages">
         <div>
           <h3>Sites e landing pages</h3>
           <p class="svc-job">Convence quem chegou.</p>
-          <p>Um site rápido, bem resolvido no celular e feito para uma coisa: fazer a pessoa entrar em contato com você. Nada de modelo pronto com o seu logo colado.</p>
+          <p>Um site rápido, bem resolvido no celular e feito para uma coisa: fazer a pessoa entrar em contato com você. Nada de modelo pronto com o seu logo colado, e no ar em até 1 dia.</p>
         </div>
         <div>
           <ul class="spec">
+            <li><b>Entrega em até 1 dia</b></li>
             <li>Pensado primeiro para o celular</li>
             <li>Botão de WhatsApp em todas as páginas</li>
             <li>Estrutura para aparecer nas buscas do Google</li>
             <li>Landing pages para campanhas e promoções</li>
             <li>Textos escritos junto com você</li>
           </ul>
-          <div class="price"><b>A partir de R$ 2.500</b><span>forma de pagamento combinada na proposta</span></div>
+          <div class="price"><b>A partir de R$ 800</b><span>forma de pagamento combinada na proposta</span></div>
         </div>
       </article>
 
-      <article class="svc">
+      <article class="svc" aria-roledescription="slide" aria-label="3 de 3: CRM sob medida">
         <div>
           <h3>CRM sob medida</h3>
           <p class="svc-job">Não deixa o cliente esfriar.</p>
@@ -372,6 +411,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         </div>
         <div>
           <ul class="spec">
+            <li><b>Pronto em até 5 dias</b> após a reunião de alinhamento</li>
             <li>Etapas do funil com os nomes que você já usa</li>
             <li>Histórico de cada contato num lugar só</li>
             <li>Lembrete de quem precisa de retorno</li>
@@ -381,6 +421,9 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
           <div class="price"><b>Sob medida</b><span>o valor depende do que precisa ser automatizado</span></div>
         </div>
       </article>
+        </div>
+        <p class="car-count" id="car-count" aria-live="polite">1 de 3</p>
+      </div>
     </div>
   </section>
 
@@ -390,11 +433,23 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <h2>Onde a venda costuma escapar</h2>
         <p>A maioria das empresas tem uma dessas partes e sente falta das outras. O cliente se perde justamente na passagem de uma para a outra.</p>
       </div>
-      <dl class="leaks">
-        <div class="leak"><dt>Anúncio sem site</dt><dd>A pessoa clica, não encontra nada que passe confiança e volta para a busca. <b>Você pagou pelo clique e não levou o contato.</b></dd></div>
-        <div class="leak"><dt>Site sem visita</dt><dd>Fica bonito no ar, mas quase ninguém chega até ele. <b>É uma vitrine numa rua sem movimento.</b></dd></div>
-        <div class="leak"><dt>Contato sem retorno</dt><dd>O pedido de orçamento afunda no meio das conversas do WhatsApp. <b>Quem responde primeiro leva o cliente.</b></dd></div>
-      </dl>
+      <ul class="leaks">
+        <li class="leak">
+          <span class="leak-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3.5l13 6.2-5.6 1.7-1.8 5.6z"/><path d="M12 11.5l5.5 5.5"/><path d="M2.5 1.5l1.2 1.2M8 1v1.6M1 7h1.6"/></svg></span>
+          <h3>Anúncio sem site</h3>
+          <p>A pessoa clica, não encontra nada que passe confiança e volta para a busca. <b>Você pagou pelo clique e não levou o contato.</b></p>
+        </li>
+        <li class="leak">
+          <span class="leak-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5 5 4h14l1.5 5.5"/><path d="M3.5 9.5a2.8 2.8 0 0 0 5.67 0 2.8 2.8 0 0 0 5.66 0 2.8 2.8 0 0 0 5.67 0"/><path d="M5 12v8h14v-8"/><path d="M10 20v-4.5h4V20"/></svg></span>
+          <h3>Site sem visita</h3>
+          <p>Fica bonito no ar, mas quase ninguém chega até ele. <b>É uma vitrine numa rua sem movimento.</b></p>
+        </li>
+        <li class="leak">
+          <span class="leak-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.5a8 8 0 0 1-11.7 7.1L4 20l1.3-4.4a8 8 0 1 1 15.2-4.1z"/><path d="M12.5 8v3.8l2.6 1.6"/></svg></span>
+          <h3>Contato sem retorno</h3>
+          <p>O pedido de orçamento afunda no meio das conversas do WhatsApp. <b>Quem responde primeiro leva o cliente.</b></p>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -480,7 +535,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <div class="faq">
         <details>
           <summary>Quanto custa?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
-          <p>Sites começam em R$ 2.500. Tráfego pago e CRM dependem do tamanho do projeto, então o valor sai na proposta, depois da conversa de 15 minutos. Você recebe tudo por escrito antes de decidir.</p>
+          <p>Sites começam em R$ 800 e a gestão de tráfego pago em R$ 1.000. O CRM depende do que precisa ser automatizado. O valor exato sai na proposta, depois da conversa de 15 minutos. Você recebe tudo por escrito antes de decidir.</p>
         </details>
         <details>
           <summary>Preciso contratar os três serviços juntos?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
@@ -531,7 +586,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
    CONFIG — número do WhatsApp e mensagens prontas
    ============================================================ */
 const CONFIG = {
-  whatsapp: "5519982040465",           // DDI + DDD + número, só dígitos
+  whatsapp: "5541984504704",           // DDI + DDD + número, só dígitos
   mensagens: {
     geral:  "Oi, Mateus! Vi seu site e quero conversar sobre como trazer mais clientes para o meu negócio.",
     previa: "Oi, Mateus! Vi seu site e quero ver uma prévia de como ficaria o site do meu negócio."
@@ -594,6 +649,58 @@ document.getElementById("yr").textContent = new Date().getFullYear();
   render();
   start();
   document.addEventListener("visibilitychange", start);
+})();
+
+/* Carrossel de serviços: infinito, cartão ativo no centro */
+(function(){
+  const track = document.querySelector(".track");
+  const reais = [...track.querySelectorAll(".svc")];
+  const R = reais.length;
+  reais.forEach(el => {
+    const c = el.cloneNode(true);
+    c.removeAttribute("aria-label");
+    c.setAttribute("aria-hidden", "true");
+    track.appendChild(c);
+  });
+  const cards = [...track.querySelectorAll(".svc")];
+  const N = cards.length;
+  const tabs = [...document.querySelectorAll(".car-tab")];
+  const count = document.getElementById("car-count");
+  let pos = 0;
+  const off = k => { let o = ((k - pos) % N + N) % N; return o > N / 2 ? o - N : o; };
+  function render(){
+    cards.forEach((el, k) => {
+      const o = off(k);
+      el.classList.toggle("jump", el._o !== undefined && Math.abs(o - el._o) > 1);
+      el.style.setProperty("--o", o);
+      el._o = o;
+      el.classList.toggle("is-center", o === 0);
+      el.inert = o !== 0;
+    });
+    const r = pos % R;
+    tabs.forEach((t, k) => t.setAttribute("aria-current", k === r ? "true" : "false"));
+    count.textContent = `${r + 1} de ${R}`;
+  }
+  const mover = d => { pos = (pos + d + N) % N; render(); };
+  const irPara = r => { const k = cards.findIndex((_, k) => k % R === r && Math.abs(off(k)) <= 1); mover(off(k)); };
+  tabs.forEach(t => t.addEventListener("click", () => irPara(+t.dataset.go)));
+  document.querySelectorAll(".car-arrow").forEach(b => b.addEventListener("click", () => mover(+b.dataset.dir)));
+  track.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight"){ e.preventDefault(); mover(1); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); mover(-1); }
+  });
+  let x0 = null;
+  track.addEventListener("pointerdown", e => { x0 = e.clientX; });
+  track.addEventListener("pointerup", e => {
+    if (x0 === null) return;
+    const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) return mover(dx < 0 ? 1 : -1);
+    const c = cards.find(el => el._o === 0).getBoundingClientRect();
+    if (e.clientX > c.right) mover(1);
+    else if (e.clientX < c.left) mover(-1);
+  });
+  track.addEventListener("pointercancel", () => { x0 = null; });
+  render();
 })();
 
 /* Formulário → mensagem pronta no WhatsApp */
